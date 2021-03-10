@@ -74,7 +74,7 @@ var fight = function(enemyName) {
 // fight each enemy-robot by looping over them and fighting them one at a time
 // function to start a new game
 var startGame= function() {
-  debugger;
+  // debugger;
   // reset player stats
   playerHealth = 100;
   playerAttack = 10;
@@ -128,7 +128,7 @@ var endGame = function() {
 };
 // start the game when the page loads
 startGame();
-debugger;
+// debugger;
 
 // wrap the game logic in a startGame() function
 // When the player is defeated or there are no more enemies, call and endGame() function that:
