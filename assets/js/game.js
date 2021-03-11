@@ -73,18 +73,32 @@ var endGame = function() {
 
 // fight function
 var fight = function(enemy) {
+  // keep track of who goes first
+  var isPlayerTurn = true;
+
+  if (Math.random() > 0.5) {
+    isPlayerTurn = false;
+  }
   // repeat and execute as long as the enemy-robot is alive
     while(enemy.health > 0 && playerInfo.health > 0) {
-      if (fightOrSkip()) {
-      // if ture, leave fight by breaking loop
+      if (isPlayerTurn) {
+        if (fightOrSkip()) {
+      // if true, leave fight by breaking loop
         break;
       }
-      // generate random damage value based on player's attack power
+    
       var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-  
+      // remove enemy's health by subtracting the amount we set in the damage variable
       enemy.health = Math.max(0, enemy.health - damage);
       console.log(
-        playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining."
+        playerInfo.name +
+        " attacked " +
+        enemy.name +
+        ". " +
+        enemy.name +
+        " now has " +
+        enemy.health +
+        " health remaining."
       );
       
       //check enemy's health
@@ -98,14 +112,20 @@ var fight = function(enemy) {
         break;
       } else {
         window.alert(enemy.name + " still has " + enemy.health + " health left.");
-       } 
-  
-       //generate random damage value based on enemy's attack power
-       var damage = randomNumber(enemy.attack - 3, enemy.attack);
-  
+       }
+       // player gets attacked first
+      } else {
+        var damage = randomNumber(enemy.attack - 3, enemy.attack);
+        // remove player's health by subtracting the amount we set in the damage variable
        playerInfo.health = Math.max(0, playerInfo.health - damage);
        console.log(
-         enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
+         enemy.name +
+         " attacked " +
+         playerInfo.name +
+         ". " + playerInfo.name +
+         " now has " +
+         playerInfo.health +
+         " health remaining."
        );
   
       //check player's health
@@ -116,7 +136,10 @@ var fight = function(enemy) {
         window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
       }
     }
-  };
+    // switch turn order for next round
+    isPlayerTurn = !isPlayerTurn;
+  }
+};
 
 
 
