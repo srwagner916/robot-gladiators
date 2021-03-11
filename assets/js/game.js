@@ -133,44 +133,26 @@ var shop = function() {
   switch (shopOptionPrompt) {
     case "REFILL":
     case "refill":
-      if (playerInfo.money >= 7) {
-      window.alert("Refilling player's health by 20 for 7 dollars.");
-    
-      //increase health and decrease money
-      playerInfo.health = playerInfo.health + 20;
-      playerInfo.money = playerInfo.money - 7;
-      }
-      else {
-        window.alert("You don't have enought money!");
-      }
-
+      playerInfo.refillHealth();
       break;
+  
+      //increase health and decrease money
     case "UPGRADE":
     case "upgrade":
-      if (playerInfo.money >= 7) {
-        window.alert("Upgrading player's attack by 6 for 7 dollars.");
+      playerInfo.upgradeAttack();
+      break;
+    case "LEAVE":
+    case "leave":
+      window.alert("Leaving the store.");
+      break;
+    default:
+      window.alert("You did not pick a valid option. Try again.");
 
-    // increase attack and decrease money
-    playerInfo.attack = playerInfo.attack + 6;
-    playerInfo.money = playerInfo.money - 7;
-  }
-  else {
-    window.alert("You dont' have enought money!");
-  }
-
-    break;
-  case "LEAVE":
-  case "leave":
-    window.alert("Leaving the store.");
-    break;
-  default:
-    window.alert("You did not pick a valid option. Try again.");
-
-    // call shop() again to force player to pick a valid option
-    shop();
-    break;
-  }
-};
+      // call shop() again to force player to pick a valid option
+      shop();
+      break;
+    }
+  };
 
 // function to generate a random numeric value
 var randomNumber = function(min, max) {
@@ -179,8 +161,20 @@ var randomNumber = function(min, max) {
   return value;
 };
 
+// function to set name
+var getPlayerName = function() {
+  var name = "";
+  while (name=== "" || name === null) {
+    name = prompt("What is your robot's name?");
+  }
+
+  console.log("'Your robots name is'" + name);
+  return name;
+};
+
+// GAME INFORMATION / VARIABLE /  
 var playerInfo = {
-  name: window.prompt("What is your robot's name?"),
+  name: getPlayerName(),
   health: 100,
   attack: 10,
   money: 10,
@@ -190,8 +184,24 @@ var playerInfo = {
     this.attack - 10;
   },
   refillHealth: function() {
-    this.health += 20;
-    this.money -= 7;
+    if (this.money >= 7) {
+      window.alert("Refilling player's health by 20 for 7 dollars.");
+      this.health += 20;
+      this.money -= 7;
+    }
+    else {
+      window.alert("You don't have enough money!");
+    }
+  },
+  upgradeAttack: function() {
+    if (this.money >= 7) {
+      window.alert("Upgrading player's attack by 6 for 7 dollars.");
+      this.attack += 6;
+      this.money -= 7;
+    }
+    else {
+      window.alert("You don't have enough money!");
+    }
   }
 };
 
